@@ -112,10 +112,12 @@ class JwtAuth
     public function setKeysDirectory($keysDirectory)
     {
         $this->keysDirectory = $keysDirectory;
+        return $this;
     }
 
     public function setSecret($secret)
     {
         $this->secret = $secret;
+        return $this;
     }
 }
