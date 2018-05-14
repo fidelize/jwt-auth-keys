@@ -6,7 +6,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Fidelize\\JwTAuth\\": "src/"
+            "fidelize\\JwtAuthKeys\\": "src/"
         }
     }
 }
