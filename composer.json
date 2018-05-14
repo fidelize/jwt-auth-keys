@@ -1,5 +1,5 @@
 {
-    "name": "jwt-auth-keys",
+    "name": "fidelize.jwt-auth-keys",
     "description": "Jwt Auth keys",
     "require": {
         "firebase/php-jwt": "^5.0"
