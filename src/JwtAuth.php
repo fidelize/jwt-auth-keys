@@ -2,6 +2,7 @@
 
 namespace fidelize\JwtAuthKeys;
 
+use DomainException;
 use Firebase\JWT\JWT;
 
 class JwtAuth
@@ -24,7 +25,7 @@ class JwtAuth
         }
 
         if (empty($secret)) {
-            throw new \DomainException('No JWT secret or private key found.');
+            throw new DomainException('No JWT secret or private key found.');
         }
 
         return JWT::encode($payload, $secret, $algorithm);
@@ -38,7 +39,7 @@ class JwtAuth
                     return JWT::decode($msg, $publicKey, ['RS256']);
                 } catch (\Firebase\JWT\SignatureInvalidException $e) {
                 } catch (\InvalidArgumentException $e) {
-                } catch (\DomainException $e) {
+                } catch (DomainException $e) {
                     // If it is an invalid key, it should just try the next one
                     // If it is another kind of DomainException, it should fail
                     if (false === strpos($e->getMessage(), 'OpenSSL unable to verify data')) {
@@ -57,7 +58,7 @@ class JwtAuth
      */
     private function getPrivateKey()
     {
-        $files = $this->globKeys('jwt.*.key');
+        $files = $this->globKeys('*.key');
 
         if (count($files) > 1) {
             throw new DomainException('Multiple private keys found.');
@@ -77,7 +78,7 @@ class JwtAuth
      */
     private function getPublicKeys()
     {
-        $files = $this->globKeys('jwt.*.key.pub');
+        $files = $this->globKeys('*.key.pub');
         $keys = [];
 
         foreach ($files as $file) {

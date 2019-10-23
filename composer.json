@@ -6,7 +6,11 @@
     },
     "autoload": {
         "psr-4": {
-            "fidelize\\JwtAuthKeys\\": "src/"
+            "fidelize\\JwtAuthKeys\\": "src/",
+            "fidelize\\JwtAuthKeys\\Tests": "tests/",
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.4"
     }
 }
