@@ -2,7 +2,7 @@
     "name": "fidelize/jwt-auth-keys",
     "description": "Jwt Auth keys",
     "require": {
-        "firebase/php-jwt": "^5.0"
+        "firebase/php-jwt": "^6.0"
     },
     "autoload": {
         "psr-4": {
