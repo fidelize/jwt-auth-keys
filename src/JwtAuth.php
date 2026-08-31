@@ -4,6 +4,7 @@ namespace fidelize\JwtAuthKeys;
 
 use DomainException;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class JwtAuth
 {
@@ -28,6 +29,10 @@ class JwtAuth
             throw new DomainException('No JWT secret or private key found.');
         }
 
+        if (is_string($payload)) {
+            $payload = ['__payload__' => $payload];
+        }
+
         return JWT::encode($payload, $secret, $algorithm);
     }
 
@@ -36,7 +41,7 @@ class JwtAuth
         if ($this->hasKeysDirectory()) {
             foreach ($this->getPublicKeys() as $publicKey) {
                 try {
-                    return JWT::decode($msg, $publicKey, ['RS256']);
+                    return $this->normalizeDecodedPayload(JWT::decode($msg, new Key($publicKey, 'RS256')));
                 } catch (\Firebase\JWT\SignatureInvalidException $e) {
                 } catch (\InvalidArgumentException $e) {
                 } catch (DomainException $e) {
@@ -49,7 +54,7 @@ class JwtAuth
             }
             // Fallback to using secret
         }
-        return JWT::decode($msg, $this->secret, ['HS256']);
+        return $this->normalizeDecodedPayload(JWT::decode($msg, new Key($this->secret, 'HS256')));
     }
 
     /**
@@ -120,5 +125,18 @@ class JwtAuth
     {
         $this->secret = $secret;
         return $this;
+    }
+
+    private function normalizeDecodedPayload($decoded)
+    {
+        if (is_object($decoded) && property_exists($decoded, '__payload__')) {
+            $properties = get_object_vars($decoded);
+
+            if (count($properties) === 1) {
+                return $decoded->__payload__;
+            }
+        }
+
+        return $decoded;
     }
 }
