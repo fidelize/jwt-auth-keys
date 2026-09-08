@@ -1,5 +1,6 @@
 {
     "name": "fidelize/jwt-auth-keys",
+    "version": "0.2.3",
     "description": "Jwt Auth keys",
     "require": {
         "php": ">=8.3",
