@@ -36,7 +36,7 @@ class JwtAuthTest extends TestCase
 
         $auth = new JwtAuth();
         $auth->setKeysDirectory(
-            __DIR__ . DIRECTORY_SEPARATOR . 'keys' . DIRECTORY_SEPARATOR . 'empty'
+            __DIR__ . DIRECTORY_SEPARATOR . 'keys' . DIRECTORY_SEPARATOR . 'empty',
         );
         $auth->encode('payload');
     }
@@ -48,7 +48,7 @@ class JwtAuthTest extends TestCase
 
         $auth = new JwtAuth();
         $auth->setKeysDirectory(
-            __DIR__ . DIRECTORY_SEPARATOR . 'keys' . DIRECTORY_SEPARATOR . 'multiple-private'
+            __DIR__ . DIRECTORY_SEPARATOR . 'keys' . DIRECTORY_SEPARATOR . 'multiple-private',
         );
         $auth->encode('payload');
     }
@@ -57,7 +57,7 @@ class JwtAuthTest extends TestCase
     {
         $auth = new JwtAuth();
         $auth->setKeysDirectory(
-            __DIR__ . DIRECTORY_SEPARATOR . 'keys' . DIRECTORY_SEPARATOR . 'single-private'
+            __DIR__ . DIRECTORY_SEPARATOR . 'keys' . DIRECTORY_SEPARATOR . 'single-private',
         );
         $result = $auth->encode('payload');
         $this->assertIsString($result);
@@ -96,11 +96,11 @@ class JwtAuthTest extends TestCase
     {
         $auth = new JwtAuth();
         $auth->setKeysDirectory(
-            __DIR__ . DIRECTORY_SEPARATOR . 'keys' . DIRECTORY_SEPARATOR . 'multiple-public'
+            __DIR__ . DIRECTORY_SEPARATOR . 'keys' . DIRECTORY_SEPARATOR . 'multiple-public',
         );
         $authSingle = new JwtAuth();
         $authSingle->setKeysDirectory(
-            __DIR__ . DIRECTORY_SEPARATOR . 'keys' . DIRECTORY_SEPARATOR . 'single-private'
+            __DIR__ . DIRECTORY_SEPARATOR . 'keys' . DIRECTORY_SEPARATOR . 'single-private',
         );
         $jwt = $authSingle->encode('payload');
         $result = $auth->decode($jwt);
